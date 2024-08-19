@@ -53,7 +53,7 @@ jobs:
         SNOWFLAKE_CONNECTIONS_DUMMY_ROLE: accountadmin
         SNOWFLAKE_CONNECTIONS_DUMMY_WAREHOUSE: Compute_wh
         SNOWFLAKE_CONNECTIONS_DUMMY_DATABASE: doc_ai_db
-      run: snow sql -q "select 41 as val;" --connection Dummy
+      run: snow sql -q "select 31 as val;" --connection Dummy
     
 
     - name: check task status
