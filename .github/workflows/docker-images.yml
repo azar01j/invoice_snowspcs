@@ -55,7 +55,9 @@ jobs:
         SNOWFLAKE_CONNECTIONS_DUMMY_DATABASE: doc_ai_db
       run: snow sql -q "select 41 as val;" --connection Dummy
     
-    - name: start snowflake_tasks
+
+    - name: check task status
+      if: success() || failure()
       env:
         SNOWFLAKE_CONNECTIONS_DUMMY_ACCOUNT: ${{secrets.ai_aCCOUNT}}
         SNOWFLAKE_CONNECTIONS_DUMMY_USER: ${{secrets.ai_USER}}
@@ -65,7 +67,7 @@ jobs:
         SNOWFLAKE_CONNECTIONS_DUMMY_DATABASE: doc_ai_db
         SNOWFLAKE_CONNECTIONS_DUMMY_SCHEMA: doc_ai_schema
       run: snow sql -q "ALTER TASK LOAD_NEW_FILE_DATA RESUME; ALTER TASK REFRESH_STAGE RESUME;" --connection Dummy
-    
+
     - name: dbt_repository
       env:
         SNOWFLAKE_CONNECTIONS_DUMMY_ACCOUNT: ${{secrets.spc_account}}
@@ -81,7 +83,7 @@ jobs:
         docker images
         snow spcs image-registry login --connection Dummy
         docker push hiiwhnq-nc74811.registry.snowflakecomputing.com/doc_ai_db/doc_ai_schema/dbt_repository/dbt_app:latest 
-        snow spcs service create dbt_service --compute-pool dbt_compute --spec-path container-services-dbt/app/spec.yml --eai-name 'test_DBT_SNOWFLAKE_EGRESS_ACCESSS_INTEGRATION' --if-not-exists --connection Dummy
+        snow spcs service create dbt_service --compute-pool dbt_compute --spec-path continer-services-dbt/app/spec.yml --eai-name 'test_DBT_SNOWFLAKE_EGRESS_ACCESSS_INTEGRATION' --if-not-exists --connection Dummy
     
     - name: Sleep for 120 seconds. Allow Service to Start and Create Endpoint
       run: sleep 120s
