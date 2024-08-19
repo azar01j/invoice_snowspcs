@@ -57,7 +57,7 @@ jobs:
     
 
     - name: check task status
-      if: success() || failure()
+      if: failure()
       env:
         SNOWFLAKE_CONNECTIONS_DUMMY_ACCOUNT: ${{secrets.ai_aCCOUNT}}
         SNOWFLAKE_CONNECTIONS_DUMMY_USER: ${{secrets.ai_USER}}
