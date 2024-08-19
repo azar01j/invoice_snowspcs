@@ -1,0 +1,19 @@
+spec:
+      containers:
+      - name: test-dbt
+        image: /doc_ai_db/doc_ai_schema/dbt_repository/dbt_app:latest
+        command:
+          - dbt
+          - deps
+          - dbt
+          - run
+        env:
+          dbt_snowflake_account: yjzyiva-tt47745
+          dbt_user: dbt_user
+          dbt_password: dbt_user_123
+          dbt_role: accountadmin
+          dbt_database: doc_ai_db
+          dbt_warehouse: compute_wh_ai
+          dbt_schema: doc_ai_schema
+      networkPolicyConfig:
+        allowInternetEgress: true
