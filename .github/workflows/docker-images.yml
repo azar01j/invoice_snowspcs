@@ -100,6 +100,6 @@ jobs:
         SNOWFLAKE_CONNECTIONS_DUMMY_DATABASE: doc_ai_db
         SNOWFLAKE_CONNECTIONS_DUMMY_SCHEMA: doc_ai_schema
       run : |
-        snow spcs service status dbt_service --connection Dummy
+        snow spcs service status dbt_invoice_service --connection Dummy
 
     
