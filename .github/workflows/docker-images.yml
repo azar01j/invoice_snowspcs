@@ -84,6 +84,7 @@ jobs:
         snow spcs image-registry login --connection Dummy
         docker push hiiwhnq-nc74811.registry.snowflakecomputing.com/doc_ai_db/doc_ai_schema/dbt_repository/dbt_invoice_app:latest 
         snow spcs service create dbt_invoice_service --compute-pool dbt_compute --spec-path continer-services-dbt/app/spec.yml --eai-name 'test_DBT_SNOWFLAKE_EGRESS_ACCESSS_INTEGRATION' --if-not-exists --connection Dummy
+        snow spcs service upgrade dbt_invoice_service --spec-path continer-services-dbt/app/spec.yml --connection Dummy
     
     - name: Sleep for 120 seconds. Allow Service to Start and Create Endpoint
       run: sleep 120s
