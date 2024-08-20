@@ -1,6 +1,6 @@
 spec:
       containers:
-      - name: invoice_process
+      - name: invoice-process
         image: /doc_ai_db/doc_ai_schema/dbt_repository/dbt_invoice_app:latest
         command:
           - dbt
