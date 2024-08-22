@@ -43,28 +43,7 @@ jobs:
     - name: Test version
       run: snow --version
     
-    - name: Test Connection Snowpark Container Services
-      env:
-        SNOWFLAKE_CONNECTIONS_DUMMY_ACCOUNT: ${{secrets.spc_account}}
-        SNOWFLAKE_CONNECTIONS_DUMMY_USER: ${{secrets.spc_USER}}
-        SNOWFLAKE_CONNECTIONS_DUMMY_PASSWORD: ${{secrets.spc_PASSWORD}}
-        SNOWFLAKE_CONNECTIONS_DUMMY_ROLE: doc_ai_role
-        SNOWFLAKE_CONNECTIONS_DUMMY_WAREHOUSE: Compute_wh_v1
-      run : snow connection test --connection Dummy
-
-    - name: test snowcli
-      env:
-        SNOWFLAKE_CONNECTIONS_DUMMY_ACCOUNT: ${{secrets.ai_aCCOUNT}}
-        SNOWFLAKE_CONNECTIONS_DUMMY_USER: ${{secrets.ai_USER}}
-        SNOWFLAKE_CONNECTIONS_DUMMY_PASSWORD: ${{secrets.ai_PASSWORD}}
-        SNOWFLAKE_CONNECTIONS_DUMMY_ROLE: accountadmin
-        SNOWFLAKE_CONNECTIONS_DUMMY_WAREHOUSE: Compute_wh
-        SNOWFLAKE_CONNECTIONS_DUMMY_DATABASE: doc_ai_db
-      run: snow sql -q "select 10 as val;" --connection Dummy
-    
-
-    - name: check task status
-      if: failure()
+    - name: call insert stored proc
       env:
         SNOWFLAKE_CONNECTIONS_DUMMY_ACCOUNT: ${{secrets.ai_aCCOUNT}}
         SNOWFLAKE_CONNECTIONS_DUMMY_USER: ${{secrets.ai_USER}}
@@ -73,7 +52,7 @@ jobs:
         SNOWFLAKE_CONNECTIONS_DUMMY_WAREHOUSE: Compute_wh
         SNOWFLAKE_CONNECTIONS_DUMMY_DATABASE: doc_ai_db
         SNOWFLAKE_CONNECTIONS_DUMMY_SCHEMA: doc_ai_schema
-      run: snow sql -q "ALTER TASK LOAD_NEW_FILE_DATA RESUME; ALTER TASK REFRESH_STAGE RESUME;" --connection Dummy
+      run: snow sql -q "CALL RAW_PDF_INSERT()" --connection Dummy
 
     - name: dbt_repository
       env:
