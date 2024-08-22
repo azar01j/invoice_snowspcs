@@ -1,6 +1,9 @@
 name: Continuous Deployment Of Docker Image to Snowpark Container Services
 
-on: [push]  
+on: 
+  repository_dispatch: 
+    type: dbt-workflow
+    
 
 # Set Environmental Variables
 env:
