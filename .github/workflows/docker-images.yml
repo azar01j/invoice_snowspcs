@@ -52,7 +52,7 @@ jobs:
         SNOWFLAKE_CONNECTIONS_DUMMY_WAREHOUSE: Compute_wh
         SNOWFLAKE_CONNECTIONS_DUMMY_DATABASE: doc_ai_db
         SNOWFLAKE_CONNECTIONS_DUMMY_SCHEMA: doc_ai_schema
-      run: snow sql -q "CALL RAW_PDF_INSERT()" --connection Dummy
+      run: snow sql -q "CALL RAW_PDF_INSERT() " --connection Dummy
 
     - name: dbt_repository
       env:
