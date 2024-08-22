@@ -73,7 +73,7 @@ jobs:
         snow spcs service upgrade dbt_invoice_service --spec-path continer-services-dbt/app/spec.yml --connection Dummy
     
     - name: Sleep for 120 seconds. Allow Service to Start and Create Endpoint
-      run: sleep 120s
+      run: sleep 130s
       shell: bash
     
     - name :  Get service details 
