@@ -12,12 +12,11 @@ from {{ ref('product_stg') }}
     {% set results_list = [] %}
 {% endif %}
 
-
 select
-    {% for columns_in in results_list %}
+distinct    {% for columns_in in results_list %}
         max(case when columns_ = '{{columns_in}}' then column_value end) as {{columns_in}}
         {% if not loop.last %},{% endif %}
     {% endfor %}
 from {{ ref('product_stg') }}
+
 group by id,row_num
-order by id,row_num

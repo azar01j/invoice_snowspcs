@@ -3,10 +3,6 @@ name: Continuous Deployment Of Docker Image to Snowpark Container Services
 on: 
   repository_dispatch: 
     type: dbt-workflow
-
-  push: 
-    branches: 
-      - main
     
 
 # Set Environmental Variables
@@ -43,7 +39,7 @@ jobs:
     - name: Test version
       run: snow --version
 
-    - name: call insert stored proc
+    - name: Refresh the directory table
       env:
         SNOWFLAKE_CONNECTIONS_DUMMY_ACCOUNT: ${{secrets.ai_aCCOUNT}}
         SNOWFLAKE_CONNECTIONS_DUMMY_USER: ${{secrets.ai_USER}}
@@ -63,7 +59,7 @@ jobs:
         SNOWFLAKE_CONNECTIONS_DUMMY_WAREHOUSE: Compute_wh
         SNOWFLAKE_CONNECTIONS_DUMMY_DATABASE: doc_ai_db
         SNOWFLAKE_CONNECTIONS_DUMMY_SCHEMA: doc_ai_schema
-      run: snow sql -q "CALL RAW_PDF_INSERT() " --connection Dummy
+      run: snow sql -q "CALL RAW_PDF_INSERT();" --connection Dummy
 
     - name: dbt_repository
       env:
